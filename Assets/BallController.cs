@@ -12,11 +12,15 @@ public class BallController : MonoBehaviour
     //ゲームオーバを表示するテキスト
     private GameObject gameoverText;
 
+    private GameObject scoreText;
+
     // Use this for initialization
     void Start()
     {
         //シーン中のGameOverTextオブジェクトを取得
         this.gameoverText = GameObject.Find("GameOverText");
+
+        this.scoreText = GameObject.Find("ScoreText");
     }
 
     // Update is called once per frame
@@ -27,7 +31,10 @@ public class BallController : MonoBehaviour
         {
             //GameoverTextにゲームオーバを表示
             this.gameoverText.GetComponent<Text>().text = "Game Over";
+
         }
+        this.scoreText.GetComponent<Text>().text = score.ToString();
+
     }
     void OnCollisionEnter(Collision other)
     {
@@ -35,9 +42,22 @@ public class BallController : MonoBehaviour
 
         {
             score = score + 10;
-            Debug.Log(score);
-
         }
-        
+
+        if (other.gameObject.tag == "LargeStarTag")
+        {
+            score = score + 30;
+        }
+
+        if (other.gameObject.tag == "LargeCloudTag")
+        {
+            score = score + 100;
+        }
+
+        if (other.gameObject.tag == "SmallCloudTag")
+        {
+            score = score + 100;
+        }
+
     }
 }
